@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="org.zerock.mapper.BoardMapper">
+  
+  <!-- <insert id="insert">
+  InSERT INTO pd_board (pno,title,pinfo,celler,price) values (pd_seq.nextval,${title},${pinfo},${celler},${price})
+  </insert> -->
+  <insert id="insert">
+  <selectKey keyProperty="pno" order="BEFORE"
+			resultType="long">
+			select pd_seq.nextval from dual
+  </selectKey>
+ 
+  insert into pd_board (pno,title,pinfo,celler,price)
+VALUES (#{pno},#{title},#{pinfo},#{celler},#{price})
+  </insert>
+  
+  <sql id="criteria">
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach item="type" collection="typeArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'T'.toString()">
+							title like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'C'.toString()">
+							celler like '%'||#{keyword}||'%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+  
+  <select id="getListWithPaging" resultType="org.zerock.domain.BoardVO">
+	 <![CDATA[
+	SELECT 
+		PNO, TITLE, PINFO, CELLER, REGDATE, UPDATEDATE, PRICE
+	FROM (
+			SELECT /*+ INDEX_DESC(pd_board) */
+			ROWNUM RN, PNO, TITLE, PINFO, CELLER, REGDATE, UPDATEDATE, PRICE
+			FROM pd_board
+			WHERE
+	]]>
+	
+	<include refid="criteria"></include>
+		<![CDATA[
+			rownum <= #{pageNum} * #{amount}
+			)
+		where rn > (#{pageNum} -1) * #{amount} 
+		]]>
+	</select>	
+	
+  <select id="getList" resultType="org.zerock.domain.BoardVO">
+  <![CDATA[
+		SELECT * FROM pd_board WHERE pno > 0
+	]]>
+  </select>
+  
+  <select id="getTotalCount" resultType="int">
+	 select count(*) from pd_board
+	 where
+	 <include refid="criteria"></include>
+	 pno > 0
+	 </select>
+  
+	<insert id="imageinsert">
+		insert into pd_image(pno, fileName, uploadPath, uuid) values (#{pno}, #{fileName}, #{uploadPath}, #{uuid})
+	</insert>
+	
+	<select id="getAttachList" resultType="org.zerock.domain.AttachImageVO">
+	select * from pd_image where pno = #{pno}
+	</select>
+	
+	<select id="read" resultType="org.zerock.domain.BoardVO">
+		select * from pd_board where pno = #{pno}
+	</select>
+ 	
+ 	<delete id="delete">
+		delete from pd_board where pno = #{pno}		
+	</delete>	
+	
+	<update id="update">
+		update pd_board set title = #{title}, pinfo = #{pinfo}, celler = #{celler}, updateDate = sysdate where pno = #{pno}	
+	</update>
+ 
+  </mapper>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="org.zerock.mapper.BoardMapper">
+  
+  <!-- <insert id="insert">
+  InSERT INTO pd_board (pno,title,pinfo,celler,price) values (pd_seq.nextval,${title},${pinfo},${celler},${price})
+  </insert> -->
+  <insert id="insert">
+  <selectKey keyProperty="pno" order="BEFORE"
+			resultType="long">
+			select pd_seq.nextval from dual
+  </selectKey>
+ 
+  insert into pd_board (pno,title,pinfo,celler,price)
+VALUES (#{pno},#{title},#{pinfo},#{celler},#{price})
+  </insert>
+  
+  <select id="getlist" resultType="org.zerock.domain.BoardVO">
+  select * from pd_board order by pno desc
+  </select>
+  
+	<insert id="imageinsert">
+		insert into pd_image(pno, fileName, uploadPath, uuid) values (#{pno}, #{fileName}, #{uploadPath}, #{uuid})
+	</insert>
+	
+	<select id="getAttachList" resultType="org.zerock.domain.AttachImageVO">
+	select * from pd_image where pno = #{pno}
+	</select>
+	
+	<select id="read" resultType="org.zerock.domain.BoardVO">
+		select * from pd_board where pno = #{pno}
+	</select>
+ 
+ 
+  </mapper>

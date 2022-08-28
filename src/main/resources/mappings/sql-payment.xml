@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="payment">
+	<resultMap id="payResult" type="Payment">
+		<result property="imp_uid" column="PAY_ID" />
+		<result property="merchant_uid" column="IMPORT_ID" />
+		<result property="paid_amount" column="PAY_AMOUNT" />
+		<result property="apply_num" column="PER_NUM" />
+		<result property="paid_at" column="PER_TIME" />
+	</resultMap>
+
+	<insert id="insertPaymentSuccess">
+		insert into pay_import values(#{imp_uid}, #{merchant_uid}, #{paid_amount}, #{apply_num}, #{paid_at})
+	</insert>	
+	
+</mapper>

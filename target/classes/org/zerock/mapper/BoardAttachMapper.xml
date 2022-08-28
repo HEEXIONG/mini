@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+				  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zerock.mapper.BoardAttachMapper">
+<insert id="insert">
+	insert into pd_image (uuid, uploadpath, filename, bno)
+	values (#{uuid}, #{uploadPath}, #{fileName}, #{bno})
+</insert>
+<delete id="delete">
+	delete from pd_image where uuid = #{uuid}
+</delete>
+<select id="findByPno" resultType="org.zerock.domain.AttachImageVO">
+	select * from pd_image where pno = #{pno}
+</select>
+<delete id="deleteAll">
+	 	delete pd_image where pno = #{pno}
+</delete>
+<!-- page600 sysdate에서 1을 뺀 어제 날짜 데이터 처리 설정 -->
+<select id="getOldFiles"
+		resultType="org.zerock.domain.AttachImageVO">
+		select * from pd_image where uploadpath = to_char(sysdate -1 ,'yyyy\mm\dd')
+</select>
+</mapper>
+

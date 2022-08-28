@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zerock.mapper.MemberMapper">
+
+
+   <resultMap type="org.zerock.domain.MemberVO" id="memberMap">
+    <id property="userid" column="userid"/>
+    <result property="userid" column="userid"/>
+    <result property="userpw" column="userpw"/>
+    <result property="USER_CODE" column="USER_CODE"/>
+    <result property="EMAIL" column="EMAIL"/>
+    <result property="NAME" column="NAME"/>
+    <result property="BIRTH" column="BIRTH"/>
+    <result property="PHONE_CD" column="PHONE_CD"/>
+    <result property="PHONE_NUM" column="PHONE_NUM"/>
+    <result property="POST_NUM" column="POST_NUM"/>
+    <result property="ADDRESS" column="ADDRESS"/>
+    <result property="DT_ADDRESS" column="DT_ADDRESS"/>
+    <collection property="authList" resultMap="authMap">
+    </collection> 
+  </resultMap>
+  
+  <resultMap type="org.zerock.domain.AuthVO" id="authMap">
+    <result property="userid" column="userid"/>
+    <result property="auth" column="auth"/>
+  </resultMap>
+  
+  <select id="read" resultMap="memberMap">
+		SELECT 
+		  mem.userid,userpw,USER_CODE,EMAIL,NAME,BIRTH,PHONE_CD,PHONE_NUM,
+		  POST_NUM,ADDRESS,DT_ADDRESS,enabled,auth
+		FROM 
+		  tb_user mem LEFT OUTER JOIN tbl_user_auth auth on mem.userid = auth.userid 
+		WHERE mem.userid = #{userid} 
+  </select>
+   
+  
+  <insert id="insertMember" >
+  
+      <!--   INSERT INTO tb_user(
+        userid,
+        userpw,
+        USER_CODE,
+        EMAIL,
+        NAME,
+        BIRTH,
+        PHONE_CD,
+        PHONE_NUM,
+        POST_NUM,
+        ADDRESS,
+        DT_ADDRESS
+        
+        )VALUES(
+        #{userid},
+        #{userpw},
+        #{USER_CODE},
+        #{NAME},
+        #{EMAIL},
+        #{NAME},
+        #{BIRTH},
+        #{PHONE_CD},
+        #{PHONE_NUM},
+        #{ADDRESS},
+        #{DT_ADDRESS}
+        ) -->
+        
+        insert all
+        into tb_user(
+        userid,
+        userpw,
+        USER_CODE,
+        EMAIL,
+        NAME,
+        BIRTH,
+        PHONE_CD,
+        PHONE_NUM,
+        POST_NUM,
+        ADDRESS,
+        DT_ADDRESS
+        
+        )VALUES(
+        #{userid},
+        #{userpw},
+        user_seq.nextval,
+        #{EMAIL},
+        #{NAME},
+        #{BIRTH},
+        #{PHONE_CD},
+        #{PHONE_NUM},
+        #{POST_NUM},
+        #{ADDRESS},
+        #{DT_ADDRESS}
+        )
+        
+        into tbl_user_auth(
+        userid
+        )values(
+        #{userid}
+        )select * from dual
+        
+        
+    </insert>
+  
+  
+  
+
+</mapper>

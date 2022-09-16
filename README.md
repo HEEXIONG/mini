@@ -6,12 +6,12 @@ JAVA JDK 1.8, ORACLE 11g, TOMCAT 9.0 , STS
 Spring MVC, Mybatis, JAVA, JSP, HTML, CSS, BootStrap, Jquery(AJAX, JSON) , OracleDB
 
 > ## 회원가입 및 로그인 시큐리티
->> DB모델링
+> DB모델링
+![image](https://user-images.githubusercontent.com/101411257/190603345-6e033d96-372c-4fc6-be2e-5d5da633baa6.png)
 
->> 시큐리티 구현 화면
->> 로그인을 한 사용자만 상품등록이 가능함.
->> 
->>
+> ## 시큐리티 구현 화면
+로그인을 한 사용자만 상품등록이 가능함.
+ 
 ``` c
 <input class="form-control" name='celler' value='<sec:authentication property="principal.username"/>' readonly="readonly" >
 ```
@@ -37,7 +37,7 @@ Spring MVC, Mybatis, JAVA, JSP, HTML, CSS, BootStrap, Jquery(AJAX, JSON) , Oracl
 	</security:http>
 </beans>
 ```
->>Bycrpt를 이용하여 사용자 비밀번호 암호화
+> ## Bycrpt를 이용하여 사용자 비밀번호 암호화
 ``` c
 	<security:authentication-manager> 
 			<security:authentication-provider user-service-ref="CustomUserDetailsService"> 

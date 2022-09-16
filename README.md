@@ -1,11 +1,23 @@
 # README
-1. 컴파일 실행 환경 = JAVA JDK 1.8, ORACLE 11g, TOMCAT 9.0 , STS
 
-2. 적용 기술 = Spring MVC, Mybatis, JAVA, JSP, HTML, CSS, BootStrap, Jquery(AJAX, JSON) , OracleDB
+> ## 컴파일 실행 환경 
+JAVA JDK 1.8, ORACLE 11g, TOMCAT 9.0 , STS
+> ## 적용 기술 
+Spring MVC, Mybatis, JAVA, JSP, HTML, CSS, BootStrap, Jquery(AJAX, JSON) , OracleDB
 
-3. Oracle 11g에 권한 부여
+> ## 회원가입 및 로그인 시큐리티
+>> DB모델링
 
---상품 테이블
+>> 시큐리티 구현 화면
+>> 로그인을 한 사용자만 상품등록이 가능함.
+>> 
+>> ![ezgif com-gif-maker](https://user-images.githubusercontent.com/101411257/190599580-7be93285-9f99-42f6-9057-18991c4aa51a.gif)
+
+>> 
+![image](https://user-images.githubusercontent.com/101411257/190597441-a0491358-78ef-46a9-b450-da6890e95c96.png)
+
+> ## 테이블
+* 상품 테이블
 
 CREATE SEQUENCE pd_SEQ;
 
@@ -29,7 +41,7 @@ CONSTRAINT  pd_board PRIMARY KEY(pno)
 
 );
 
---상품 이미지 테이블
+* 상품 이미지 테이블
 
 create table pd_image(
 
@@ -47,7 +59,7 @@ foreign key (pno) references pd_board(pno)
 
 );
 
---회원가입 테이블
+* 회원가입 테이블
 
 CREATE SEQUENCE USER_SEQ;
 
@@ -79,7 +91,7 @@ enabled char(1) default '1'
 
 ); 
 
---시큐리티 권한 테이블
+* 시큐리티 권한 테이블
 
 create table tbl_user_auth(
 
@@ -91,7 +103,7 @@ constraint fk_user_auth foreign key(userid) REFERENCES tb_user(userid)
 
 );
 
---카드결제 테이블
+* 카드결제 테이블
 
 create table pay_import(
 
@@ -119,4 +131,4 @@ increment by 1
 
 cache 20;
 
-4. 
+

@@ -11,17 +11,17 @@ Spring MVC, Mybatis, JAVA, JSP, HTML, CSS, BootStrap, Jquery(AJAX, JSON) , Oracl
 
 > ## 시큐리티 구현 화면
 로그인을 한 사용자만 상품등록이 가능함.
- 
-``` c
+~~~jsp
 <input class="form-control" name='celler' value='<sec:authentication property="principal.username"/>' readonly="readonly" >
-```
+~~~
 ![ezgif com-gif-maker](https://user-images.githubusercontent.com/101411257/190599580-7be93285-9f99-42f6-9057-18991c4aa51a.gif)
 
 ![ezgif com-gif-maker (1)](https://user-images.githubusercontent.com/101411257/190605749-261716ad-952a-4800-ba92-620f27a8660e.gif)
 
 
  security-context.xml을 추가해 구현했습니다.
-``` c
+
+~~~xml
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -39,7 +39,7 @@ Spring MVC, Mybatis, JAVA, JSP, HTML, CSS, BootStrap, Jquery(AJAX, JSON) , Oracl
 		<security:logout logout-url="/customLogout" invalidate-session="true" />
 	</security:http>
 </beans>
-```
+~~~
 > ## Bycrpt를 이용하여 사용자 비밀번호 암호화
 ``` c
 	<security:authentication-manager> 

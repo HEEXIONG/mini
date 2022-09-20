@@ -26,16 +26,25 @@
 JAVA JDK 1.8, ORACLE 11g, TOMCAT 9.0 , STS
 
 
-> ## 회원가입 및 로그인 시큐리티
+> ## 로그인 시큐리티
 > DB모델링
 ![image](https://user-images.githubusercontent.com/101411257/190603345-6e033d96-372c-4fc6-be2e-5d5da633baa6.png)
 
 > ## 시큐리티 구현 화면
 로그인을 한 사용자만 상품등록이 가능함.
+JSTL 태그 라이브러리로
+~~~jsp
+ <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %> 
+~~~
+id에 권한을 주어 로그인을 한 사용자만이 글을 등록 할 수 있음.
 ~~~jsp
 <input class="form-control" name='celler' value='<sec:authentication property="principal.username"/>' readonly="readonly" >
 ~~~
+> 로그인을 하지 않은 유저는 글등록을 누르면 바로 로그인창으로 들어가짐
+
 ![ezgif com-gif-maker](https://user-images.githubusercontent.com/101411257/191140594-cdcd61e7-e704-4fbf-9a85-44f8d2793dc6.gif)
+
+> 로그인 후 글등록 가능
 
 ![ezgif com-gif-maker (1)](https://user-images.githubusercontent.com/101411257/191140706-d941ebcf-2cc4-4117-ada1-527c81525d9c.gif)
 
@@ -69,6 +78,33 @@ JAVA JDK 1.8, ORACLE 11g, TOMCAT 9.0 , STS
 	</security:authentication-manager>
 ```
 ![image](https://user-images.githubusercontent.com/101411257/190597441-a0491358-78ef-46a9-b450-da6890e95c96.png)
+
+> ## 회원가입
+> 회원가입 서비스 주입으로 컨트롤러 작성
+> BCryptPasswordEncoder 주입으로 회원가입시 비밀번호 암호화함
+~~~java
+@Setter(onMethod_ = @Autowired)
+private singupService signupService;
+@Setter(onMethod_ = @Autowired)
+BCryptPasswordEncoder pwdEncoder;		
+		@GetMapping(value = "/joinForm")
+		public void signupGET() {
+			
+		}
+		 @PostMapping(value = "/joinForm")
+		 public String signupPOST(MemberVO memVo) throws Exception {
+		 
+			 String rawPW ="";
+			 String encodePW="";
+			 
+			 rawPW = memVo.getUserpw();
+			 encodePW = pwdEncoder.encode(rawPW);
+			 memVo.setUserpw(encodePW);
+		  signupService.insertMember(memVo);
+~~~
+
+> ## 회원가입 화면구현
+![ezgif com-gif-maker (2)](https://user-images.githubusercontent.com/101411257/191141931-58ad33eb-1cd3-498f-b86e-cf26fc4b24bf.gif)
 
 # 스프링으로 진행하며 느낀점
 - jsp model2 mvc에 비해 의존성 주입을 활용한 어노테이션으로 객체 자동 생성이 편하다.

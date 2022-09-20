@@ -37,8 +37,7 @@ JAVA JDK 1.8, ORACLE 11g, TOMCAT 9.0 , STS
 ~~~
 ![ezgif com-gif-maker](https://user-images.githubusercontent.com/101411257/191140594-cdcd61e7-e704-4fbf-9a85-44f8d2793dc6.gif)
 
-![ezgif com-gif-maker (1)](https://user-images.githubusercontent.com/101411257/190605749-261716ad-952a-4800-ba92-620f27a8660e.gif)
-
+![ezgif com-gif-maker (1)](https://user-images.githubusercontent.com/101411257/191140706-d941ebcf-2cc4-4117-ada1-527c81525d9c.gif)
 
  security-context.xml을 추가해 구현했습니다.
 
